@@ -1,0 +1,10 @@
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\bin\Release\TextParser.exe.config
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\bin\Release\TextParser.exe
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\bin\Release\TextParser.pdb
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Release\TextParser.FrmConfig.resources
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Release\TextParser.FrmMain.resources
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Release\TextParser.Properties.Resources.resources
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Release\TextParser.csproj.GenerateResource.cache
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Release\TextParser.csproj.CoreCompileInputs.cache
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Release\TextParser.exe
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Release\TextParser.pdb

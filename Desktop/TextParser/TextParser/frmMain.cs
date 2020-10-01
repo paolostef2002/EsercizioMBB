@@ -1,25 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TextParser
 {
-    public partial class frmMain : Form
+    public partial class FrmMain : Form
     {
         private string SourceFolder = "";
         private string DestinationFolder = "";
-        private string Header = "->";
+        private string Header = Program._HeaderSymbol; // "->";
 
         private List<Fragment> AllThatStuff = new List<Fragment>();
 
-        public frmMain()
+        public FrmMain()
         {
             InitializeComponent();
         }
@@ -30,6 +26,7 @@ namespace TextParser
             SrcDlg.ShowNewFolderButton = true;
             SrcDlg.Description = "Seleziona la cartella di origine dei file da scansionare";
             SrcDlg.RootFolder = Environment.SpecialFolder.Desktop;
+            SrcDlg.SelectedPath = Program._RootPath;
 
             if (DialogResult.OK == SrcDlg.ShowDialog())
             {
@@ -55,6 +52,7 @@ namespace TextParser
             DestDlg.ShowNewFolderButton = true;
             DestDlg.Description = "Seleziona la cartella radice di destinazione dei file da generare";
             DestDlg.RootFolder = Environment.SpecialFolder.Desktop;
+            DestDlg.SelectedPath = Program._RootPath;
             if (DialogResult.OK == DestDlg.ShowDialog())
             {
                 if (Directory.Exists(DestDlg.SelectedPath))
@@ -94,28 +92,32 @@ namespace TextParser
                 if (File.Exists(f) && !IsBinary(f, 1))
                 {
                     int RowIndex = 0;
+                    int CurrentFragmentStartingRowIndex = 0;
                     string[] lines = File.ReadAllLines(f);
-                    string identifier = "";
-                    string current_fragment = "";
+                    string Identifier = "";
+                    string CurrentFragment = "";
                     bool HeaderFound = false;
                     foreach (string line in lines)
                     {
                         RowIndex++;
                         if (line.StartsWith(Header))
                         {
+
                             //nuovo simbolo di inizio frammento:
                             if (HeaderFound)
                             {
+                                string filename = Path.GetFileName(f);
                                 //avevo un frammento in corso, lo chiudo e lo memorizzo
-                                AllThatStuff.Add(new Fragment(SourceFolder, f, RowIndex, identifier, current_fragment));
+                                AllThatStuff.Add(new Fragment(SourceFolder, filename, CurrentFragmentStartingRowIndex, Identifier, CurrentFragment));
 
                                 //reset
                                 HeaderFound = true;
-                                identifier = "";
-                                current_fragment = "";
+                                Identifier = "";
+                                CurrentFragment = "";
+                                CurrentFragmentStartingRowIndex = RowIndex;
 
                                 //inizio nuovo frammento
-                                ParseLine(line, ref identifier, ref current_fragment);
+                                ParseLine(line, ref Identifier, ref CurrentFragment);
                                 
 
                             }
@@ -123,31 +125,34 @@ namespace TextParser
                             {
                                 //reset
                                 HeaderFound = true;
-                                identifier = "";
-                                current_fragment = "";
+                                Identifier = "";
+                                CurrentFragment = "";
+                                CurrentFragmentStartingRowIndex = RowIndex;
 
-                                ParseLine(line, ref identifier, ref current_fragment);
+                                ParseLine(line, ref Identifier, ref CurrentFragment);
                             }
                         }
                         else
                         {
                             if (HeaderFound)
                             {
-                                //concateno il frammento corrente
-                                current_fragment += Environment.NewLine + line;
+                                //ho un frammento in corso, concateno la riga al testo
+                                CurrentFragment += Environment.NewLine + line;
+                                
                             }
                         }
+
+                        if (RowIndex == lines.Count())
+                            AllThatStuff.Add(new Fragment(SourceFolder, Path.GetFileName(f), CurrentFragmentStartingRowIndex, Identifier, CurrentFragment));
                     }
-
-                    //inserisco nella griglia i frammenti trovati
-                    foreach (Fragment fff in AllThatStuff)
-                    {
-                        this.dgvFragments.Rows.Add(fff.Filename, fff.Row.ToString(), fff.Identifier, fff.Text.Length > 50 ? fff.Text.Substring(0, 50) + " [cut]" : fff.Text);
-                    }
-
-
 
                 }
+            }
+
+            //inserisco nella griglia i frammenti trovati
+            foreach (Fragment f in AllThatStuff)
+            {
+                this.dgvFragments.Rows.Add(f.Filename, f.Row.ToString(), f.Identifier, f.Text.Length > 50 ? f.Text.Substring(0, 50) + " [cut]" : f.Text);
             }
         }
 
@@ -155,14 +160,14 @@ namespace TextParser
         {
             rtbLog.Clear();
             string error = "";
-            foreach (Fragment fff in AllThatStuff)
+            foreach (Fragment f in AllThatStuff)
             {
-                rtbLog.AppendText("Identificativo: " + fff.Identifier + Environment.NewLine);
-                fff.Save(ref error);
+                rtbLog.AppendText("Identificativo: " + f.Identifier);
+                f.Save(DestinationFolder, ref error);
                 if (!string.IsNullOrEmpty(error))
-                {
-                    rtbLog.AppendText(error + Environment.NewLine);
-                }
+                    rtbLog.AppendText(" ERRORE: " + error + Environment.NewLine);
+                else
+                    rtbLog.AppendText(" File " + f.Filename + " creato in " + DestinationFolder + Environment.NewLine);
             }
         }
 
@@ -259,25 +264,28 @@ namespace TextParser
 
         private void ParseLine(string line, ref string identifier, ref string current_fragment)
         {
+            string sep = Program._Separator;
+            if (sep == "WHITESPACE") sep = " ";
             int pos1 = line.IndexOf(Header) + Header.Length;
-            int pos2 = line.IndexOf(" ", pos1);
-            int pos3 = line.IndexOf(" ", pos2 + 1);
+            int pos2 = line.IndexOf(sep, pos1);
+            int pos3 = line.IndexOf(sep, pos2 + 1);
             identifier = line.Substring(pos2 + 1, pos3 - 3);
             current_fragment = line.Substring(pos3 + 1);
         }
         #endregion
 
+        private void btnConfig_Click(object sender, EventArgs e)
+        {
+            FrmConfig cfg = new FrmConfig();
+            cfg.ShowDialog();
+        }
     }
 
     public class Fragment
     {
-        #region Variabili membro
-        private string mFilename = String.Empty;
-        private int mRow = 0;
-        private string mIdentifier = String.Empty;
-        private string mText = String.Empty;
+        #region Variabili interne
 
-        private string mRootPath = string.Empty;
+
         #endregion
 
 
@@ -288,66 +296,41 @@ namespace TextParser
 
         public Fragment(string rootPath, string filename, int row, string identifier, string text)
         {
-            mRootPath = rootPath;
-            mFilename = filename;
-            mRow = row;
-            mIdentifier = identifier;
-            mText = text;
+            RootPath = rootPath;
+            Filename = filename;
+            Row = row;
+            Identifier = identifier;
+            Text = text;
         }
 
         #endregion
 
         #region Proprietà
 
-        public string RootPath
-        {
-            get { return mRootPath; }
-            set { mRootPath = value; }
-        }
-
-        public string Filename
-        {
-            get { return mFilename; }
-            set { mFilename = value; }
-        }
-
-        public int Row
-        {
-            get { return mRow; }
-            set { mRow = value; }
-        }
-
-
-        public string Identifier
-        {
-            get { return mIdentifier; }
-            set { mIdentifier = value; }
-        }
-
-        public string Text
-        {
-            get { return mText; }
-            set { mText = value; }
-        }
+        public string RootPath { get; set; } = String.Empty;
+        public string Filename { get; set; } = String.Empty;
+        public int Row { get; set; } = 0;
+        public string Identifier { get; set; } = String.Empty;
+        public string Text { get; set; } = String.Empty;
 
         #endregion
 
         #region Metodi
 
-        public bool Save(ref string error)
+        public bool Save(string DestinationFolder, ref string error)
         {
             bool res = false;
 
-            if (!Directory.Exists(Path.Combine(mRootPath, Identifier)))
-                Directory.CreateDirectory(Path.Combine(mRootPath, Identifier));
+            if (!Directory.Exists(Path.Combine(DestinationFolder, Identifier)))
+                Directory.CreateDirectory(Path.Combine(DestinationFolder, Identifier));
 
-            if (!File.Exists(Path.Combine(mRootPath, mIdentifier, mFilename)))
+            if (!File.Exists(Path.Combine(DestinationFolder, Identifier, Filename)))
             {
                 try
                 {
-                    using (FileStream fs = File.Create(Path.Combine(mRootPath, mIdentifier, mFilename)))
+                    using (FileStream fs = File.Create(Path.Combine(DestinationFolder, Identifier, Filename)))
                     {
-                        Byte[] txt = new UTF8Encoding(true).GetBytes(mText);
+                        Byte[] txt = new UTF8Encoding(true).GetBytes(Text);
                         fs.Write(txt, 0, txt.Length);
                     }
                     res = true;
@@ -360,7 +343,7 @@ namespace TextParser
             }
             else
             {
-                error = "File " + Path.Combine(mRootPath, mIdentifier, mFilename) + " esistente.";
+                error = "File " + Path.Combine(DestinationFolder, Identifier, Filename) + " esistente.";
                 res = false;
             }
 

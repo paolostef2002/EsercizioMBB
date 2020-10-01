@@ -1,6 +1,6 @@
 ﻿namespace TextParser
 {
-    partial class frmMain
+    partial class FrmMain
     {
         /// <summary>
         /// Variabile di progettazione necessaria.
@@ -36,13 +36,14 @@
             this.lblFolderDestination = new System.Windows.Forms.Label();
             this.btnScan = new System.Windows.Forms.Button();
             this.dgvFragments = new System.Windows.Forms.DataGridView();
-            this.lblPreview = new System.Windows.Forms.Label();
-            this.btnGenerate = new System.Windows.Forms.Button();
-            this.rtbLog = new System.Windows.Forms.RichTextBox();
             this.colFilename = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colRowIndex = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIdentifier = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblPreview = new System.Windows.Forms.Label();
+            this.btnGenerate = new System.Windows.Forms.Button();
+            this.rtbLog = new System.Windows.Forms.RichTextBox();
+            this.btnConfig = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFragments)).BeginInit();
             this.SuspendLayout();
             // 
@@ -60,12 +61,12 @@
             this.txtFolderSource.Enabled = false;
             this.txtFolderSource.Location = new System.Drawing.Point(133, 22);
             this.txtFolderSource.Name = "txtFolderSource";
-            this.txtFolderSource.Size = new System.Drawing.Size(610, 20);
+            this.txtFolderSource.Size = new System.Drawing.Size(461, 20);
             this.txtFolderSource.TabIndex = 1;
             // 
             // btnFolderSource
             // 
-            this.btnFolderSource.Location = new System.Drawing.Point(749, 20);
+            this.btnFolderSource.Location = new System.Drawing.Point(605, 20);
             this.btnFolderSource.Name = "btnFolderSource";
             this.btnFolderSource.Size = new System.Drawing.Size(39, 23);
             this.btnFolderSource.TabIndex = 2;
@@ -75,7 +76,7 @@
             // 
             // btnFolderDestination
             // 
-            this.btnFolderDestination.Location = new System.Drawing.Point(749, 62);
+            this.btnFolderDestination.Location = new System.Drawing.Point(605, 62);
             this.btnFolderDestination.Name = "btnFolderDestination";
             this.btnFolderDestination.Size = new System.Drawing.Size(39, 23);
             this.btnFolderDestination.TabIndex = 5;
@@ -88,7 +89,7 @@
             this.txtFolderDestination.Enabled = false;
             this.txtFolderDestination.Location = new System.Drawing.Point(133, 64);
             this.txtFolderDestination.Name = "txtFolderDestination";
-            this.txtFolderDestination.Size = new System.Drawing.Size(610, 20);
+            this.txtFolderDestination.Size = new System.Drawing.Size(461, 20);
             this.txtFolderDestination.TabIndex = 4;
             // 
             // lblFolderDestination
@@ -102,6 +103,7 @@
             // 
             // btnScan
             // 
+            this.btnScan.Enabled = false;
             this.btnScan.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnScan.Location = new System.Drawing.Point(15, 104);
             this.btnScan.Name = "btnScan";
@@ -130,34 +132,6 @@
             this.dgvFragments.Size = new System.Drawing.Size(773, 150);
             this.dgvFragments.TabIndex = 7;
             // 
-            // lblPreview
-            // 
-            this.lblPreview.AutoSize = true;
-            this.lblPreview.Location = new System.Drawing.Point(373, 149);
-            this.lblPreview.Name = "lblPreview";
-            this.lblPreview.Size = new System.Drawing.Size(54, 13);
-            this.lblPreview.TabIndex = 8;
-            this.lblPreview.Text = "Anteprima";
-            // 
-            // btnGenerate
-            // 
-            this.btnGenerate.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnGenerate.Location = new System.Drawing.Point(15, 321);
-            this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(773, 32);
-            this.btnGenerate.TabIndex = 9;
-            this.btnGenerate.Text = "Genera Files";
-            this.btnGenerate.UseVisualStyleBackColor = true;
-            this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
-            // 
-            // rtbLog
-            // 
-            this.rtbLog.Location = new System.Drawing.Point(15, 359);
-            this.rtbLog.Name = "rtbLog";
-            this.rtbLog.Size = new System.Drawing.Size(773, 217);
-            this.rtbLog.TabIndex = 10;
-            this.rtbLog.Text = "";
-            // 
             // colFilename
             // 
             this.colFilename.HeaderText = "File Origine";
@@ -184,11 +158,51 @@
             this.colText.Name = "colText";
             this.colText.ReadOnly = true;
             // 
-            // frmMain
+            // lblPreview
+            // 
+            this.lblPreview.AutoSize = true;
+            this.lblPreview.Location = new System.Drawing.Point(373, 149);
+            this.lblPreview.Name = "lblPreview";
+            this.lblPreview.Size = new System.Drawing.Size(54, 13);
+            this.lblPreview.TabIndex = 8;
+            this.lblPreview.Text = "Anteprima";
+            // 
+            // btnGenerate
+            // 
+            this.btnGenerate.Enabled = false;
+            this.btnGenerate.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnGenerate.Location = new System.Drawing.Point(15, 321);
+            this.btnGenerate.Name = "btnGenerate";
+            this.btnGenerate.Size = new System.Drawing.Size(773, 32);
+            this.btnGenerate.TabIndex = 9;
+            this.btnGenerate.Text = "Genera Files";
+            this.btnGenerate.UseVisualStyleBackColor = true;
+            this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
+            // 
+            // rtbLog
+            // 
+            this.rtbLog.Location = new System.Drawing.Point(15, 359);
+            this.rtbLog.Name = "rtbLog";
+            this.rtbLog.Size = new System.Drawing.Size(773, 217);
+            this.rtbLog.TabIndex = 10;
+            this.rtbLog.Text = "";
+            // 
+            // btnConfig
+            // 
+            this.btnConfig.Location = new System.Drawing.Point(666, 20);
+            this.btnConfig.Name = "btnConfig";
+            this.btnConfig.Size = new System.Drawing.Size(122, 65);
+            this.btnConfig.TabIndex = 11;
+            this.btnConfig.Text = "Configurazione";
+            this.btnConfig.UseVisualStyleBackColor = true;
+            this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
+            // 
+            // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 588);
+            this.ClientSize = new System.Drawing.Size(800, 587);
+            this.Controls.Add(this.btnConfig);
             this.Controls.Add(this.rtbLog);
             this.Controls.Add(this.btnGenerate);
             this.Controls.Add(this.lblPreview);
@@ -202,7 +216,7 @@
             this.Controls.Add(this.lblFolderSource);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "frmMain";
+            this.Name = "FrmMain";
             this.ShowIcon = false;
             this.Text = "Parser di testo";
             ((System.ComponentModel.ISupportInitialize)(this.dgvFragments)).EndInit();
@@ -228,6 +242,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colIdentifier;
         private System.Windows.Forms.DataGridViewTextBoxColumn colText;
         private System.Windows.Forms.RichTextBox rtbLog;
+        private System.Windows.Forms.Button btnConfig;
     }
 }
 

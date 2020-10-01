@@ -1,10 +1,10 @@
 D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\bin\Debug\TextParser.exe.config
 D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\bin\Debug\TextParser.exe
 D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\bin\Debug\TextParser.pdb
-D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Debug\TextParser.csprojAssemblyReference.cache
 D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Debug\TextParser.frmMain.resources
 D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Debug\TextParser.Properties.Resources.resources
 D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Debug\TextParser.csproj.GenerateResource.cache
 D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Debug\TextParser.csproj.CoreCompileInputs.cache
 D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Debug\TextParser.exe
 D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Debug\TextParser.pdb
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Debug\TextParser.FrmConfig.resources
