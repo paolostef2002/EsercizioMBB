@@ -11,29 +11,12 @@ namespace TextParser
             InitializeComponent();
 
             txtHeaderSymbol.Text = Program._HeaderSymbol;
-            txtSeparator.Text = Program._Separator == "WHITESPACE" ? " " : Program._Separator;
             txtRootPath.Text = Program._RootPath;
-
-            switch (txtSeparator.Text)
-            {
-                case "":
-                    label4.Text = "[NOT SET]";
-                    break;
-
-                case " ":
-                    label4.Text = "[WHITESPACE]";
-                    break;
-
-                default:
-                    label4.Text = "";
-                    break;
-            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             Program._HeaderSymbol = txtHeaderSymbol.Text;
-            Program._Separator = txtSeparator.Text == " " ? "WHITESPACE" : txtSeparator.Text;
             Program._RootPath = txtRootPath.Text;
             this.Close();
         }

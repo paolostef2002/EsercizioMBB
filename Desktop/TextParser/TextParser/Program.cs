@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using TextParser.Properties;
 
 namespace TextParser
 {
@@ -23,7 +18,6 @@ namespace TextParser
 
         public static string _RootPath = Properties.Settings.Default.RootPath; // "D:\\GitHubRepo\\EsercizioMBB\\Desktop\\TextParser\\Test";
         public static string _HeaderSymbol = Properties.Settings.Default.HeaderSymbol; //"->";
-        public static string _Separator = Properties.Settings.Default.Separatore; //" ";
-        
+       
     }
 }

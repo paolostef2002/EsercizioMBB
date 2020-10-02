@@ -46,17 +46,5 @@ namespace TextParser.Properties {
                 this["HeaderSymbol"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Separatore {
-            get {
-                return ((string)(this["Separatore"]));
-            }
-            set {
-                this["Separatore"] = value;
-            }
-        }
     }
 }

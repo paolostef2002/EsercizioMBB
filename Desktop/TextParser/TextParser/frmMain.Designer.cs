@@ -44,6 +44,8 @@
             this.btnGenerate = new System.Windows.Forms.Button();
             this.rtbLog = new System.Windows.Forms.RichTextBox();
             this.btnConfig = new System.Windows.Forms.Button();
+            this.lblSourceError = new System.Windows.Forms.Label();
+            this.lblDestError = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFragments)).BeginInit();
             this.SuspendLayout();
             // 
@@ -197,11 +199,35 @@
             this.btnConfig.UseVisualStyleBackColor = true;
             this.btnConfig.Click += new System.EventHandler(this.btnConfig_Click);
             // 
+            // lblSourceError
+            // 
+            this.lblSourceError.AutoSize = true;
+            this.lblSourceError.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSourceError.ForeColor = System.Drawing.Color.Red;
+            this.lblSourceError.Location = new System.Drawing.Point(130, 45);
+            this.lblSourceError.Name = "lblSourceError";
+            this.lblSourceError.Size = new System.Drawing.Size(42, 13);
+            this.lblSourceError.TabIndex = 12;
+            this.lblSourceError.Text = "[MSG]";
+            // 
+            // lblDestError
+            // 
+            this.lblDestError.AutoSize = true;
+            this.lblDestError.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDestError.ForeColor = System.Drawing.Color.Red;
+            this.lblDestError.Location = new System.Drawing.Point(130, 87);
+            this.lblDestError.Name = "lblDestError";
+            this.lblDestError.Size = new System.Drawing.Size(42, 13);
+            this.lblDestError.TabIndex = 13;
+            this.lblDestError.Text = "[MSG]";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 587);
+            this.Controls.Add(this.lblDestError);
+            this.Controls.Add(this.lblSourceError);
             this.Controls.Add(this.btnConfig);
             this.Controls.Add(this.rtbLog);
             this.Controls.Add(this.btnGenerate);
@@ -243,6 +269,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colText;
         private System.Windows.Forms.RichTextBox rtbLog;
         private System.Windows.Forms.Button btnConfig;
+        private System.Windows.Forms.Label lblSourceError;
+        private System.Windows.Forms.Label lblDestError;
     }
 }
 

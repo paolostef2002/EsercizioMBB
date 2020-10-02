@@ -18,6 +18,8 @@ namespace TextParser
         public FrmMain()
         {
             InitializeComponent();
+            lblSourceError.Text = "";
+            lblDestError.Text = "";
         }
 
         private void btnFolderSource_Click(object sender, EventArgs e)
@@ -34,16 +36,23 @@ namespace TextParser
                 {
                     SourceFolder = SrcDlg.SelectedPath;
                     txtFolderSource.Text = SrcDlg.SelectedPath;
+                    EnableScan(true);
+                    lblSourceError.Text = "";
                 }
                 else
                 {
-                    MessageBox.Show("Il percorso selezionato non esiste.", "Errore", MessageBoxButtons.OK);
+                    lblSourceError.Text = "Il percorso selezionato non esiste.";
                     SourceFolder = "";
                     txtFolderSource.Text = "";
+                    EnableScan(false);
+                    EnableGenerate(false);
                 }
             }
-
-            EnableButtons();
+            else
+            {
+                EnableScan(false);
+                EnableGenerate(false);
+            }
         }
 
         private void btnFolderDestination_Click(object sender, EventArgs e)
@@ -61,23 +70,29 @@ namespace TextParser
                     {
                         DestinationFolder = DestDlg.SelectedPath;
                         txtFolderDestination.Text = DestDlg.SelectedPath;
+                        EnableGenerate(true);
+                        lblDestError.Text = "";
                     }
                     else
                     {
-                        MessageBox.Show("L'utente corrente non ha tutti i permessi di scrittura (directory e file) sul percorso selezionato.", "Errore", MessageBoxButtons.OK);
+                        lblDestError.Text = "L'utente corrente non ha tutti i permessi di scrittura (directory e file) sul percorso selezionato.";
                         DestinationFolder = "";
                         txtFolderDestination.Text = "";
+                        EnableGenerate(false);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Il percorso selezionato non esiste.", "Errore", MessageBoxButtons.OK);
+                    lblDestError.Text = "Il percorso selezionato non esiste.";
                     DestinationFolder = "";
                     txtFolderDestination.Text = "";
+                    EnableGenerate(false);
                 }
             }
+            else
+                EnableGenerate(false);
 
-            EnableButtons();
+
         }
 
         private void btnScan_Click(object sender, EventArgs e)
@@ -154,6 +169,11 @@ namespace TextParser
             {
                 this.dgvFragments.Rows.Add(f.Filename, f.Row.ToString(), f.Identifier, f.Text.Length > 50 ? f.Text.Substring(0, 50) + " [cut]" : f.Text);
             }
+
+            if (AllThatStuff.Count > 0)
+                EnableGenerate(true);
+            else
+                EnableGenerate(false);
         }
 
         private void btnGenerate_Click(object sender, EventArgs e)
@@ -173,21 +193,21 @@ namespace TextParser
 
         #region PRIVATE MTD
 
-        private void EnableButtons()
+        private void EnableScan(bool enable)
         {
-            if (Directory.Exists(SourceFolder)
-                && Directory.Exists(DestinationFolder)
-                && CheckDirectoryAccess(DestinationFolder))
-            {
-                btnScan.Enabled = true;
-                btnGenerate.Enabled = true;
-            }
-            else
-            {
-                btnScan.Enabled = false;
-                btnGenerate.Enabled = false;
-            }
+            btnScan.Enabled = false;
 
+            if (Directory.Exists(SourceFolder))
+                btnScan.Enabled = enable;
+        }
+
+        private void EnableGenerate(bool enable)
+        {
+            btnGenerate.Enabled = false;
+
+            if (Directory.Exists(DestinationFolder)
+                && CheckDirectoryAccess(DestinationFolder))
+                btnGenerate.Enabled = enable;
         }
 
         private bool CheckDirectoryAccess(string directory)
@@ -264,13 +284,14 @@ namespace TextParser
 
         private void ParseLine(string line, ref string identifier, ref string current_fragment)
         {
-            string sep = Program._Separator;
-            if (sep == "WHITESPACE") sep = " ";
-            int pos1 = line.IndexOf(Header) + Header.Length;
-            int pos2 = line.IndexOf(sep, pos1);
-            int pos3 = line.IndexOf(sep, pos2 + 1);
-            identifier = line.Substring(pos2 + 1, pos3 - 3);
-            current_fragment = line.Substring(pos3 + 1);
+            char[] delimiterChars = { ' ', ',', '.', ':', '\t', '\r', '\n' };
+            string line1 = line.Substring(Header.Length);
+            line1 = line1.Trim();
+            string[] arrline1 = line1.Split(delimiterChars, 2, StringSplitOptions.RemoveEmptyEntries);
+            identifier = arrline1[0];
+            string line2 = line1.Substring(identifier.Length);
+            line2 = line2.Trim();
+            current_fragment = line2;
         }
         #endregion
 

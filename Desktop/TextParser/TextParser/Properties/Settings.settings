@@ -8,8 +8,5 @@
     <Setting Name="HeaderSymbol" Type="System.String" Scope="User">
       <Value Profile="(Default)">-&gt;</Value>
     </Setting>
-    <Setting Name="Separatore" Type="System.String" Scope="User">
-      <Value Profile="(Default)"> </Value>
-    </Setting>
   </Settings>
 </SettingsFile>
