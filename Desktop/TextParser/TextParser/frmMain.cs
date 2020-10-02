@@ -100,80 +100,90 @@ namespace TextParser
             this.dgvFragments.Rows.Clear();
             AllThatStuff.Clear();
 
-
-            string[] arrFiles = Directory.GetFiles(SourceFolder);
-            foreach (string f in arrFiles)
+            if (Directory.Exists(SourceFolder))
             {
-                if (File.Exists(f) && !IsBinary(f, 1))
+                string[] arrFiles = Directory.GetFiles(SourceFolder);
+                foreach (string f in arrFiles)
                 {
-                    int RowIndex = 0;
-                    int CurrentFragmentStartingRowIndex = 0;
-                    string[] lines = File.ReadAllLines(f);
-                    string Identifier = "";
-                    string CurrentFragment = "";
-                    bool HeaderFound = false;
-                    foreach (string line in lines)
+                    if (File.Exists(f) && !IsBinary(f, 1))
                     {
-                        RowIndex++;
-                        if (line.StartsWith(Header))
+                        int RowIndex = 0;
+                        int CurrentFragmentStartingRowIndex = 0;
+                        string[] lines = File.ReadAllLines(f);
+                        string Identifier = "";
+                        string CurrentFragment = "";
+                        bool HeaderFound = false;
+                        foreach (string line in lines)
                         {
-
-                            //nuovo simbolo di inizio frammento:
-                            if (HeaderFound)
+                            RowIndex++;
+                            if (line.StartsWith(Header))
                             {
-                                string filename = Path.GetFileName(f);
-                                //avevo un frammento in corso, lo chiudo e lo memorizzo
-                                AllThatStuff.Add(new Fragment(SourceFolder, filename, CurrentFragmentStartingRowIndex, Identifier, CurrentFragment));
 
-                                //reset
-                                HeaderFound = true;
-                                Identifier = "";
-                                CurrentFragment = "";
-                                CurrentFragmentStartingRowIndex = RowIndex;
+                                //nuovo simbolo di inizio frammento:
+                                if (HeaderFound)
+                                {
+                                    string filename = Path.GetFileName(f);
+                                    //avevo un frammento in corso, lo chiudo e lo memorizzo
+                                    AllThatStuff.Add(new Fragment(SourceFolder, filename, CurrentFragmentStartingRowIndex, Identifier, CurrentFragment));
 
-                                //inizio nuovo frammento
-                                ParseLine(line, ref Identifier, ref CurrentFragment);
-                                
+                                    //reset
+                                    HeaderFound = true;
+                                    Identifier = "";
+                                    CurrentFragment = "";
+                                    CurrentFragmentStartingRowIndex = RowIndex;
 
+                                    //inizio nuovo frammento
+                                    ParseLine(line, ref Identifier, ref CurrentFragment);
+
+
+                                }
+                                else
+                                {
+                                    //reset
+                                    HeaderFound = true;
+                                    Identifier = "";
+                                    CurrentFragment = "";
+                                    CurrentFragmentStartingRowIndex = RowIndex;
+
+                                    ParseLine(line, ref Identifier, ref CurrentFragment);
+                                }
                             }
                             else
                             {
-                                //reset
-                                HeaderFound = true;
-                                Identifier = "";
-                                CurrentFragment = "";
-                                CurrentFragmentStartingRowIndex = RowIndex;
+                                if (HeaderFound)
+                                {
+                                    //ho un frammento in corso, concateno la riga al testo
+                                    CurrentFragment += Environment.NewLine + line;
 
-                                ParseLine(line, ref Identifier, ref CurrentFragment);
+                                }
                             }
-                        }
-                        else
-                        {
-                            if (HeaderFound)
-                            {
-                                //ho un frammento in corso, concateno la riga al testo
-                                CurrentFragment += Environment.NewLine + line;
-                                
-                            }
+
+                            if (RowIndex == lines.Count())
+                                AllThatStuff.Add(new Fragment(SourceFolder, Path.GetFileName(f), CurrentFragmentStartingRowIndex, Identifier, CurrentFragment));
                         }
 
-                        if (RowIndex == lines.Count())
-                            AllThatStuff.Add(new Fragment(SourceFolder, Path.GetFileName(f), CurrentFragmentStartingRowIndex, Identifier, CurrentFragment));
                     }
-
                 }
-            }
 
-            //inserisco nella griglia i frammenti trovati
-            foreach (Fragment f in AllThatStuff)
-            {
-                this.dgvFragments.Rows.Add(f.Filename, f.Row.ToString(), f.Identifier, f.Text.Length > 50 ? f.Text.Substring(0, 50) + " [cut]" : f.Text);
-            }
+                //inserisco nella griglia i frammenti trovati
+                foreach (Fragment f in AllThatStuff)
+                {
+                    this.dgvFragments.Rows.Add(f.Filename, f.Row.ToString(), f.Identifier, f.Text.Length > 50 ? f.Text.Substring(0, 50) + " [cut]" : f.Text);
+                }
 
-            if (AllThatStuff.Count > 0)
-                EnableGenerate(true);
+                if (AllThatStuff.Count > 0)
+                    EnableGenerate(true);
+                else
+                    EnableGenerate(false);
+            }
             else
+            {
+                lblSourceError.Text = "Il percorso selezionato non esiste.";
+                SourceFolder = "";
+                txtFolderSource.Text = "";
+                EnableScan(false);
                 EnableGenerate(false);
+            }
         }
 
         private void btnGenerate_Click(object sender, EventArgs e)
