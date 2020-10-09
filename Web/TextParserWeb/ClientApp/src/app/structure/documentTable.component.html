@@ -1,0 +1,15 @@
+<table class="table table-striped">
+  <tbody>
+    <tr><th>Path</th><th>Filename</th><th>Import Date</th><th></th></tr>
+    <tr * ngFor="let document of documents">
+      <td>{{document.originpath}}</td>
+      <td>{{document.filename}}</td>
+      <td>{{document.importdate}}</td>
+      <td>
+        <button class="btn btn-primary btn-sm" [routerLink]="['/detail', product.productId]">
+          Fragments
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>

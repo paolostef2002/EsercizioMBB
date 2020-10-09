@@ -1,0 +1,13 @@
+<table class="table table-striped">
+  <tbody>
+    <tr><th>Path</th><th>Filename</th><th>Identifier</th></tr>
+    <tr * ngFor="let fragment of fragments">
+      <td>{{fragment.destPath}}</td>
+      <td>{{fragment.filename}}</td>
+      <td>{{fragment.identifier}}</td>
+    </tr>
+  </tbody>
+</table>
+<div class="text-center">
+  <button class="btn btn-primary" routerLink="/docs">Back</button>
+</div>

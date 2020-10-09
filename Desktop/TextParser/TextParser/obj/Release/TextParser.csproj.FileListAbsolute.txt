@@ -8,3 +8,7 @@ D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Release\TextParser.
 D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Release\TextParser.csproj.CoreCompileInputs.cache
 D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Release\TextParser.exe
 D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Release\TextParser.pdb
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\bin\Release\Fragment.dll
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\bin\Release\Fragment.pdb
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Release\TextParser.csprojAssemblyReference.cache
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\TextParser\obj\Release\TextParser.csproj.CopyComplete

@@ -1,0 +1,9 @@
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\Fragment\bin\Release\netstandard2.0\Fragment.deps.json
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\Fragment\bin\Release\netstandard2.0\Fragment.dll
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\Fragment\bin\Release\netstandard2.0\Fragment.pdb
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\Fragment\obj\Release\netstandard2.0\Fragment.csprojAssemblyReference.cache
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\Fragment\obj\Release\netstandard2.0\Fragment.AssemblyInfoInputs.cache
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\Fragment\obj\Release\netstandard2.0\Fragment.AssemblyInfo.cs
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\Fragment\obj\Release\netstandard2.0\Fragment.csproj.CoreCompileInputs.cache
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\Fragment\obj\Release\netstandard2.0\Fragment.dll
+D:\GitHubRepo\EsercizioMBB\Desktop\TextParser\Fragment\obj\Release\netstandard2.0\Fragment.pdb
